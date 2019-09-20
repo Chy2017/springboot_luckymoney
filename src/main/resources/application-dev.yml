@@ -1,0 +1,9 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /luckymoney/xj
+
+limit:
+  minMoney: 0.01
+  maxMoney: 99
+  description: 最少要发${limit.minMoney}元，最多发${limit.maxMoney}元

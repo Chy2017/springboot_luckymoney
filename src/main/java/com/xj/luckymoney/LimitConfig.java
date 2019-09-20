@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 /**
  * Created by xj
  * 2019-09-20 17:24
+ * des：使用对象进行配置，一定要掌握。使用对象配置还是单个配置，具体看业务逻辑
  **/
 @Component
 @ConfigurationProperties(prefix = "limit")
