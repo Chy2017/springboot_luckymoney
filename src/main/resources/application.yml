@@ -1,4 +1,4 @@
 spring:
   profiles:
-    active: prod
+    active: dev
 #这个可以在打成 jar包发布后，通过命令切换active的内容
