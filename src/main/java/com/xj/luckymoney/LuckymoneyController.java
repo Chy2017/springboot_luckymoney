@@ -1,6 +1,7 @@
 package com.xj.luckymoney;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -16,6 +17,10 @@ public class LuckymoneyController {
 
     @Autowired
     private LuckymoneyRepository luckymoneyRepository;
+
+    @Autowired
+    private LuckymoneyService luckymoneyService;
+
     /**
      * 获取红包列表
      */
@@ -23,6 +28,7 @@ public class LuckymoneyController {
     public List<Luckymoney> getList(){
         return luckymoneyRepository.findAll();
     }
+
     /**
      * 创建红包（发红包）
      */
@@ -34,6 +40,7 @@ public class LuckymoneyController {
         luckymoney.setMoney(money);
         return luckymoneyRepository.save(luckymoney);
     }
+
     /**
      * 通过id查询红包
      */
@@ -62,5 +69,13 @@ public class LuckymoneyController {
             return luckymoneyRepository.save(luckymoney1);
         }
         return null;*/
+    }
+
+    /**
+     * 实现发两个红包的事务
+     */
+    @PostMapping("/luckysmoneys/two")
+    public void createTwo(){
+        luckymoneyService.createTwo();
     }
 }

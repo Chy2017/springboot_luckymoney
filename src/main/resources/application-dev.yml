@@ -16,8 +16,8 @@ spring:
     password: 282013
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       #这里如果是create，每次会重新建表，所以改为update
     show-sql: true
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-    #设置正确的Hibernate SQL方言，这里的mysql版本5，不能缺省，否则报错
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #设置正确的Hibernate SQL方言，这里的mysql版本5，不能缺省，否则报错；这里5后面不加InnoDB的话，默认是MyISAM。
