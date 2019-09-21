@@ -1,27 +1,30 @@
 package com.xj.luckymoney;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 /**
  * Created by xj
  * 2019-09-20 17:24
  **/
-// Spring4之后新加入的注解，返回json。原来返回json需要@ResponseBody和@Controller配合，其等价于
-/*
-    @Controller
-    @ResponseBody
-*/
+// Spring4之后新加入的注解 @RestController = @Controller + @ResponseBody
 @RestController
+@RequestMapping("/hello")
 public class HelloController {
 
-    @Autowired //这个注解的功能就是为我们注入一个定义好的bean
-    //写成一个配置类的原因，是注入的时候不需要一个一个配置的@Value，只需要@Autowired一个配置对象，就可以全部导入
+    @Autowired // 注入一个定义好的bean
     private LimitConfig limitConfig;
+    // 写成一个配置类的原因，是注入的时候不需要一个个的配置@Value，只需要@Autowired一个配置对象
 
-    @GetMapping("/hello")//是在spring4.3加的新注解，整合了@RequestMapping(method = RequestMethod.GET)
-    //其等价于 @RequestMapping(value = "/hello",method = RequestMethod.GET)
+    // spring4.3新加注解 @GetMapping = @RequestMapping(method = RequestMethod.GET)
+    // @PostMapping("/say") + @GetMapping("/say") =  @RequestMapping("/say")
+    @GetMapping("/say")
     public String say(){
         return "学习使用springboot发红包！" + limitConfig.getDescription();
+    }
+
+    @GetMapping("/say/{id}")
+    public String sayId(@PathVariable("id") Integer myId){
+        return "id:" + myId;
     }
 }
