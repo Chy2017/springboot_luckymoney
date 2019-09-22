@@ -1,5 +1,6 @@
-package com.xj.luckymoney;
+package com.xj.luckymoney.controller;
 
+import com.xj.luckymoney.properties.LimitConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
