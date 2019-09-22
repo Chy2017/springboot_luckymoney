@@ -3,12 +3,13 @@ package com.xj.luckymoney.controller;
 import com.xj.luckymoney.pojo.Luckymoney;
 import com.xj.luckymoney.repository.LuckymoneyRepository;
 import com.xj.luckymoney.service.LuckymoneyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ import java.util.List;
  **/
 @RestController /* @RestController = @Controller + @ResponseBody */
 public class LuckymoneyController {
+
+    //org.slf4j.Logger是spring自带的一个日志的框架
+    private final static Logger logger= LoggerFactory.getLogger(LuckymoneyController.class);
 
     @Autowired
     private LuckymoneyRepository luckymoneyRepository;
@@ -30,6 +34,7 @@ public class LuckymoneyController {
      */
     @GetMapping("/luckymoneys")
     public List<Luckymoney> getList(){
+        logger.info("getList");
         return luckymoneyRepository.findAll();
     }
 

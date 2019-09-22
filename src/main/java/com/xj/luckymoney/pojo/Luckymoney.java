@@ -65,4 +65,17 @@ public class Luckymoney {
     public void setConsumer(String consumer) {
         this.consumer = consumer;
     }
+
+    /**
+     * 想在打印的时候，打印对象里面的内容，需要给对象加一个toString方法，直接生成
+     */
+    @Override
+    public String toString() {
+        return "Luckymoney{" +
+                "id=" + id +
+                ", money=" + money +
+                ", producer='" + producer + '\'' +
+                ", consumer='" + consumer + '\'' +
+                '}';
+    }
 }
