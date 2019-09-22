@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class LuckymoneyService {
 
     @Autowired
-    private LuckymoneyRepository luckymoneyRepository;
+    private LuckymoneyRepository repository;
 
     /**
      * 事务：指的是数据库事务，注意MyISAM是不支持事务的，我们要选择InnoDB；
@@ -30,11 +30,11 @@ public class LuckymoneyService {
         Luckymoney luckymoney1 = new Luckymoney();
         luckymoney1.setProducer("xiongjj");
         luckymoney1.setMoney(new BigDecimal(520));
-        luckymoneyRepository.save(luckymoney1);
+        repository.save(luckymoney1);
 
         Luckymoney luckymoney2 = new Luckymoney();
         luckymoney2.setProducer("xiongjj");
         luckymoney2.setMoney(new BigDecimal(1314));
-        luckymoneyRepository.save(luckymoney2);
+        repository.save(luckymoney2);
     }
 }
