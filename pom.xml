@@ -19,11 +19,14 @@
     </properties>
 
     <dependencies>
+
+        <!--   作为web项目必须引入的依赖     -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--   单元测试要用到的依赖     -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -43,6 +46,7 @@
 
     <build>
         <plugins>
+            <!--    使用maven构建项目的一个插件     -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

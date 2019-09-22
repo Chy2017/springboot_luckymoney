@@ -1,18 +1,21 @@
-package com.xj.luckymoney;
+package com.xj.luckymoney.controller;
 
+import com.xj.luckymoney.pojo.Luckymoney;
+import com.xj.luckymoney.repository.LuckymoneyRepository;
+import com.xj.luckymoney.service.LuckymoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by xj
  * 2019-09-21 17:45
  **/
-@RestController
+@RestController /* @RestController = @Controller + @ResponseBody */
 public class LuckymoneyController {
 
     @Autowired
@@ -23,6 +26,7 @@ public class LuckymoneyController {
 
     /**
      * 获取红包列表
+     * @return List<Luckymoney>
      */
     @GetMapping("/luckymoneys")
     public List<Luckymoney> getList(){
@@ -31,26 +35,35 @@ public class LuckymoneyController {
 
     /**
      * 创建红包（发红包）
+     * @return Luckymoney
+     * @Tip 现在做这样一件事情：“如果红包的大小小于10块钱，就禁止掉”。
      */
     @PostMapping("/luckymoneys")
-    public Luckymoney create(@RequestParam("producer") String producer,
-                             @RequestParam("money") BigDecimal money){
-        Luckymoney luckymoney = new Luckymoney();
-        luckymoney.setProducer(producer);
-        luckymoney.setMoney(money);
+    /** @Valid  ：表示要验证的内容    BindingResult：表示验证结果 */
+    public Luckymoney create(@Valid Luckymoney luckymoney, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getFieldError().getDefaultMessage());
+            return null;
+        }
         return luckymoneyRepository.save(luckymoney);
     }
 
     /**
      * 通过id查询红包
+     * @param id
+     * @return Luckymoney
      */
     @GetMapping("/luckymoneys/{id}")
     public Luckymoney findById(@PathVariable("id") Integer id){
         return luckymoneyRepository.findById(id).orElse(null);
         // 不能直接返回option对象，需要用orElse，指明如果查不到的话返回什么
     }
+
     /**
      * 更新红包（领红包）
+     * @param id
+     * @param consumer
+     * @return Luckymoney
      */
     @PutMapping("/luckymoneys/{id}")
     public Luckymoney update(@PathVariable("id") Integer id,
