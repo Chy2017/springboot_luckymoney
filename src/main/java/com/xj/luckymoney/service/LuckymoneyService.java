@@ -67,4 +67,11 @@ public class LuckymoneyService {
          */
         return ResultUtil.success(luckymoney);
     }
+
+    /**
+     * 通过id查询一个红包，用于测试单元测试
+     */
+    public Luckymoney findOne(Integer id){
+        return repository.findById(id).orElse(new Luckymoney());
+    }
 }
