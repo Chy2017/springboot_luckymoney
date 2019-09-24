@@ -1,8 +1,11 @@
 package com.xj.luckymoney.controller;
 
+import com.xj.luckymoney.enums.ResultEnum;
 import com.xj.luckymoney.pojo.Luckymoney;
+import com.xj.luckymoney.pojo.Result;
 import com.xj.luckymoney.repository.LuckymoneyRepository;
 import com.xj.luckymoney.service.LuckymoneyService;
+import com.xj.luckymoney.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ public class LuckymoneyController {
     private final static Logger logger= LoggerFactory.getLogger(LuckymoneyController.class);
 
     @Autowired
-    private LuckymoneyRepository luckymoneyRepository;
+    private LuckymoneyRepository repository;
 
     @Autowired
     private LuckymoneyService luckymoneyService;
@@ -35,7 +38,7 @@ public class LuckymoneyController {
     @GetMapping("/luckymoneys")
     public List<Luckymoney> getList(){
         logger.info("getList");
-        return luckymoneyRepository.findAll();
+        return repository.findAll();
     }
 
     /**
@@ -45,12 +48,11 @@ public class LuckymoneyController {
      */
     @PostMapping("/luckymoneys")
     /** @Valid  ：表示要验证的内容    BindingResult：表示验证结果 */
-    public Luckymoney create(@Valid Luckymoney luckymoney, BindingResult bindingResult){
+    public Result<Luckymoney> create(@Valid Luckymoney luckymoney, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return null;
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
-        return luckymoneyRepository.save(luckymoney);
+        return ResultUtil.success(repository.save(luckymoney));
     }
 
     /**
@@ -60,7 +62,7 @@ public class LuckymoneyController {
      */
     @GetMapping("/luckymoneys/{id}")
     public Luckymoney findById(@PathVariable("id") Integer id){
-        return luckymoneyRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
         // 不能直接返回option对象，需要用orElse，指明如果查不到的话返回什么
     }
 
@@ -73,10 +75,10 @@ public class LuckymoneyController {
     @PutMapping("/luckymoneys/{id}")
     public Luckymoney update(@PathVariable("id") Integer id,
                              @RequestParam("consumer") String consumer){
-        Luckymoney luckymoney = luckymoneyRepository.findById(id).orElse(null);
+        Luckymoney luckymoney = repository.findById(id).orElse(null);
         if(luckymoney != null){
             luckymoney.setConsumer(consumer);
-            return luckymoneyRepository.save(luckymoney);
+            return repository.save(luckymoney);
         }
         return null;
         /**另一种写法
@@ -95,5 +97,17 @@ public class LuckymoneyController {
     @PostMapping("/luckysmoneys/two")
     public void createTwo(){
         luckymoneyService.createTwo();
+    }
+
+    /**
+     * 查看某个红包是否会让宝宝开心接受
+     * @param id 红包id
+     */
+    @GetMapping("/luckymoney/ishappy/{id}")
+    public Result getIsHappy(@PathVariable("id") Integer id) throws Exception{
+        /**
+         * 捕获异常，再封装，再返回给浏览器
+         */
+        return luckymoneyService.happyOrNot(id);
     }
 }

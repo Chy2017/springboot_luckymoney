@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by xj
  * 2019-09-22 16:29
+ * How to do Aop?
  **/
 @Aspect
 @Component //把这个文件引入到spring容器中去
@@ -50,7 +51,8 @@ public class HttpAspect {
 
     // 检查我们回复的请求，有的时候十分有用
     @AfterReturning(returning = "object", pointcut = "log()")
-    public void doAfterRetruning(Object object){
-        logger.info("response = {}", object.toString());
+    public void doAfterReturning(Object object){
+        if (object != null)
+            logger.info("response = {}", object.toString());
     }
 }
