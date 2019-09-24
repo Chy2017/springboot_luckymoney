@@ -18,7 +18,7 @@ public class Luckymoney {
     @GeneratedValue//自增
     private Integer id;
 
-    @Min(value = 10, message = "红包金额过少，会被宝宝嫌弃")
+    @Min(value = 1, message = "这种小红包就不要发了，浪费时间")
     private BigDecimal money;
 
     /**
